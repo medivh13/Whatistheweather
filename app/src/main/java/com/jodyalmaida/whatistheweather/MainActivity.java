@@ -67,10 +67,9 @@ public class MainActivity extends AppCompatActivity {
                     data = reader.read();
                 }
             } catch (Exception e){
-
-                Toast.makeText(MainActivity.this, "Could not find weather", Toast.LENGTH_LONG).show();
+                Log.i("do in background ", e.getMessage());
             }
-            return null;
+            return result;
         }
 
         @Override
@@ -105,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
                 }
-            } catch (JSONException e){
-                e.printStackTrace();
+            } catch (Exception e){
+                Log.i("on post execute ", e.getMessage());
             }
         }
     }
