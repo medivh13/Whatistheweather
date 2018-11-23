@@ -27,12 +27,12 @@ public class MainActivity extends AppCompatActivity {
     TextView weatherResult;
     public void findWeather(View view){
 
-//        Log.i("citi", cityName.getText().toString());
+        Log.i("citi", cityName.getText().toString());
 //        weatherResult.setText(cityName.getText().toString());
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(cityName.getWindowToken(),0);
-        String url = "http://api.nandawperdana.com/people.json";
-        new Downloadtask().execute(url);
+        Downloadtask task = new Downloadtask();
+        task.execute("http://api.openweathermap.org/data/2.5/weather?q="+cityName.getText().toString()+"&appid=d497df22b780872b3e0e9ff8d5df71ca");
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 String message ="";
                 JSONObject jsonObject = new JSONObject(result);
 
-                String weatherInfo = jsonObject.getString("data");
+                String weatherInfo = jsonObject.getString("weather");
 
                 JSONArray arr = new JSONArray(weatherInfo);
 
@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
                     JSONObject jsonPart = arr.getJSONObject(i);
 
-                    main = jsonPart.getString("name");
-                    desc = jsonPart.getString("email");
+                    main = jsonPart.getString("main");
+                    desc = jsonPart.getString("description");
 
                     if(main !="" && desc !=""){
                         message += main +" : " + desc + "\r\n";
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if(message !=""){
-                    Log.i("citi", message);
+//                    Log.i("citi", "asw");
                     weatherResult.setText(message);
 //                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
