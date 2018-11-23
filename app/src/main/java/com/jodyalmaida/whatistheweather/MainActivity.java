@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 //        weatherResult.setText(cityName.getText().toString());
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(cityName.getWindowToken(),0);
-        Downloadtask task = new Downloadtask();
-        task.execute("http://api.openweathermap.org/data/2.5/weather?q="+cityName.getText().toString());
+        String url = "http://api.nandawperdana.com/people.json";
+        new Downloadtask().execute(url);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 String message ="";
                 JSONObject jsonObject = new JSONObject(result);
 
-                String weatherInfo = jsonObject.getString("weather");
+                String weatherInfo = jsonObject.getString("data");
 
                 JSONArray arr = new JSONArray(weatherInfo);
 
@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
                     JSONObject jsonPart = arr.getJSONObject(i);
 
-                    main = jsonPart.getString("main");
-                    desc = jsonPart.getString("description");
+                    main = jsonPart.getString("name");
+                    desc = jsonPart.getString("email");
 
                     if(main !="" && desc !=""){
                         message += main +" : " + desc + "\r\n";
